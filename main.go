@@ -15,6 +15,7 @@ type login_object struct {
 
 func postlogin(rw http.ResponseWriter, req *http.Request) {
 	(rw).Header().Set("Access-Control-Allow-Origin", "*")
+	(rw).Header().Set("Content-Type", "text/plain")
 	if req.URL.Path != "/api/login" {
 		http.Error(rw, "404 not found.", http.StatusNotFound)
 		return
