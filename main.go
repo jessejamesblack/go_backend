@@ -27,7 +27,7 @@ func postlogin(rw http.ResponseWriter, req *http.Request) {
 	}
 
 	log.Println(postBody.Email)
-	if (postBody.Email == "c137@onecause.com") && (postBody.Password == "#th@nH@rm#y#r!$100%D0p#") {
+	if (postBody.Email == "c137@onecause.com") && (postBody.Password == "#th@nH@rm#y#r!$100%D0p#" && (postBody.OneTimeToken != "")) {
 		log.Println(postBody.Email)
 		log.Println(postBody.Password)
 		log.Println(postBody.OneTimeToken)
