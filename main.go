@@ -22,19 +22,38 @@ func postlogin(rw http.ResponseWriter, req *http.Request) {
 	}
 
 	body, err := ioutil.ReadAll(req.Body)
-	if err != nil {
-		panic(err)
-	}
-	log.Println(string(body))
-
 	var postBody login_object
 	err = json.Unmarshal(body, &postBody)
 	if err != nil {
 		panic(err)
 	}
+
 	log.Println(postBody.email)
-	log.Println(postBody.password)
-	log.Println(postBody.oneTimeToken)
+	if (postBody.email == "c137@onecause.com") && (postBody.password == "#th@nH@rm#y#r!$100%D0p#") {
+		log.Println(postBody.email)
+		log.Println(postBody.password)
+		log.Println(postBody.oneTimeToken)
+		rw.WriteHeader(http.StatusOK)
+		resp := make(map[string]string)
+		resp["message"] = "Status OK"
+		jsonResp, err := json.Marshal(resp)
+		rw.Write(jsonResp)
+		if err != nil {
+			panic(err)
+		}
+		return
+	} else {
+		log.Println("login validation failed")
+		rw.WriteHeader(http.StatusUnauthorized)
+		resp := make(map[string]string)
+		resp["message"] = "Status not okay"
+		jsonResp, err := json.Marshal(resp)
+		if err != nil {
+			panic(err)
+		}
+		rw.Write(jsonResp)
+		return
+	}
 }
 
 func main() {
