@@ -46,10 +46,10 @@ func postlogin(rw http.ResponseWriter, req *http.Request) {
 		resp := make(map[string]string)
 		resp["message"] = "Status not okay"
 		jsonResp, err := json.Marshal(resp)
+		rw.Write(jsonResp)
 		if err != nil {
 			panic(err)
 		}
-		rw.Write(jsonResp)
 		return
 	}
 }
