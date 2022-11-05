@@ -3,15 +3,14 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"net/http"
 )
 
 type login_object struct {
-	email        string
-	password     string
-	oneTimeToken string
+	Email        string
+	Password     string
+	OneTimeToken string
 }
 
 func postlogin(rw http.ResponseWriter, req *http.Request) {
@@ -20,19 +19,18 @@ func postlogin(rw http.ResponseWriter, req *http.Request) {
 		http.Error(rw, "404 not found.", http.StatusNotFound)
 		return
 	}
-
-	body, err := ioutil.ReadAll(req.Body)
+	decoder := json.NewDecoder(req.Body)
 	var postBody login_object
-	err = json.Unmarshal(body, &postBody)
+	err := decoder.Decode(&postBody)
 	if err != nil {
 		panic(err)
 	}
 
-	log.Println(postBody.email)
-	if (postBody.email == "c137@onecause.com") && (postBody.password == "#th@nH@rm#y#r!$100%D0p#") {
-		log.Println(postBody.email)
-		log.Println(postBody.password)
-		log.Println(postBody.oneTimeToken)
+	log.Println(postBody.Email)
+	if (postBody.Email == "c137@onecause.com") && (postBody.Password == "#th@nH@rm#y#r!$100%D0p#") {
+		log.Println(postBody.Email)
+		log.Println(postBody.Password)
+		log.Println(postBody.OneTimeToken)
 		rw.WriteHeader(http.StatusOK)
 		resp := make(map[string]string)
 		resp["message"] = "Status OK"
